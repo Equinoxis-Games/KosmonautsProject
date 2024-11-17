@@ -1,0 +1,1 @@
+C:\Users\esteb\Documents\Kosmonauts_repo\Kosmonauts_project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\6kq3q3f1\obj\arm64-v8a

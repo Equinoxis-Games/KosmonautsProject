@@ -1,0 +1,3 @@
+C:\Users\esteb\Documents\Kosmonauts_repo\Kosmonauts_project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\esteb\Documents\Kosmonauts_repo\Kosmonauts_project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\FramePacing\CMakeLists.txt
+C:\Users\esteb\Documents\Kosmonauts_repo\Kosmonauts_project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
