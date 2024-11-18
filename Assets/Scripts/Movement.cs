@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Movement : MonoBehaviour
 {
     public float acceleration = 5f;
     public float maxSpeed = 10f;
     public float rotationSpeed = 10f;
+    public float oxygenPercent = 100f;
 
     private float maxSpeedPlus = 1f;
     private Rigidbody2D rb;
@@ -16,6 +19,8 @@ public class Movement : MonoBehaviour
 
     public Joystick joystick;
     public SpriteRenderer playerSprite;
+    public Image oxygenImg;
+    public TextMeshProUGUI oxygenTxt;
 
     void Start()
     {
@@ -51,6 +56,8 @@ public class Movement : MonoBehaviour
         if (inputDirection.magnitude > 0)
         {
             currentVelocity = Vector2.Lerp(currentVelocity, inputDirection * maxSpeed * maxSpeedPlus, acceleration * Time.deltaTime);
+
+            UseOxygen();
         }
 
         rb.linearVelocity = currentVelocity;
@@ -74,6 +81,15 @@ public class Movement : MonoBehaviour
         {
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
+    }
+
+    void UseOxygen()
+    {
+        oxygenPercent -= 0.5f * Time.deltaTime;
+
+        oxygenImg.fillAmount = oxygenPercent / 100f;
+
+        oxygenTxt.text = (int)oxygenPercent + "%";
     }
 
     void PlayerRotation()
