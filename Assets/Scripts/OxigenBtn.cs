@@ -16,6 +16,6 @@ public class OxigenBtn : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         player.OxigenImpulseValue(false);
-        playerMat.bounciness = 0.4f;
+        playerMat.bounciness = 0.3f;
     }
 }

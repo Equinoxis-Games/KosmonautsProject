@@ -1,0 +1,23 @@
+# ninja log v5
+19	2072	7537471773207157	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	5485f6b6f6feb985
+91	653	7537471758894987	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	d048b09b7023a12b
+2072	2162	7537471774154858	C:/Users/esteb/Documents/KosmonautsProject/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4g1h5c63/obj/arm64-v8a/libgame.so	bb923592b754e888
+30	1925	7537471771727135	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	c43c9bce1ea4bca2
+656	839	7537471760794987	C:/Users/esteb/Documents/KosmonautsProject/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4g1h5c63/obj/arm64-v8a/libswappywrapper.so	962f04102d6dfe0e
+51	1513	7537471767508502	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	fef9a7232f84c20a
+3	1764	7537471770094444	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	7a812ead02327498
+80	1625	7537471768525065	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	49d858760d97033d
+61	1708	7537471769504905	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	910c3955fabd50f6
+11	1626	7537471768504906	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2b877faf52421eb1
+43	1659	7537471769013183	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	558cfbfd04e5027a
+42	423	7541058298511422	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	d048b09b7023a12b
+424	787	7541058302579002	C:/Users/esteb/Documents/KosmonautsProject/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4g1h5c63/obj/arm64-v8a/libswappywrapper.so	962f04102d6dfe0e
+25	1111	7541058305780427	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	fef9a7232f84c20a
+3	1120	7541058305901259	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	2b877faf52421eb1
+21	1166	7541058306358380	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	49d858760d97033d
+12	1192	7541058306565423	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	558cfbfd04e5027a
+36	1204	7541058306716192	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	910c3955fabd50f6
+8	1266	7541058307356322	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	7a812ead02327498
+30	1394	7541058308606130	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	c43c9bce1ea4bca2
+16	1501	7541058309713820	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	5485f6b6f6feb985
+1501	1602	7541058310730451	C:/Users/esteb/Documents/KosmonautsProject/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4g1h5c63/obj/arm64-v8a/libgame.so	bb923592b754e888
