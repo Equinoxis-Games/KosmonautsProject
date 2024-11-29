@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour
 
     void HandleInput()
     {
-        /*if (!oxigenImpulse) return;
+        if (!oxigenImpulse) return;
 
         if (timeStuned > 0)
         {
@@ -46,7 +46,7 @@ public class Movement : MonoBehaviour
             currentVelocity = rb.linearVelocity;
 
             return;
-        }*/
+        }
 
         float horizontalInput = joystick.Horizontal;
         float verticalInput = joystick.Vertical;
