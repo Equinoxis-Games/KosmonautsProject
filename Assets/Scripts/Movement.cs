@@ -34,19 +34,17 @@ public class Movement : MonoBehaviour
         //LimitVelocity();
 
         PlayerRotation();
-    }
-
-    void HandleInput()
-    {
-        if (!oxigenImpulse) return;
 
         if (timeStuned > 0)
         {
             timeStuned -= 1 * Time.deltaTime;
             currentVelocity = rb.linearVelocity;
-
-            return;
         }
+    }
+
+    void HandleInput()
+    {
+        if (!oxigenImpulse || timeStuned > 0) return;
 
         float horizontalInput = joystick.Horizontal;
         float verticalInput = joystick.Vertical;
