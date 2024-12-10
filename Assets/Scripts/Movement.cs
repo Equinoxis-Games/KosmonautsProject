@@ -15,11 +15,13 @@ public class Movement : MonoBehaviour
     private Vector2 currentVelocity = Vector2.zero;
 
     public Joystick joystick;
-    public SpriteRenderer playerSprite;
+
+    private PlayerStats playerStats;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     void LateUpdate()
@@ -29,19 +31,17 @@ public class Movement : MonoBehaviour
         LimitVelocity();
 
         PlayerRotation();
-    }
-
-    void HandleInput()
-    {
-        if (!oxigenImpulse) return;
 
         if (timeStuned > 0)
         {
             timeStuned -= 1 * Time.deltaTime;
             currentVelocity = rb.linearVelocity;
-
-            return;
         }
+    }
+
+    void HandleInput()
+    {
+        if (!oxigenImpulse || timeStuned > 0 || playerStats.GetOxygen() <= 0) return;
 
         float horizontalInput = joystick.Horizontal;
         float verticalInput = joystick.Vertical;
@@ -51,6 +51,8 @@ public class Movement : MonoBehaviour
         if (inputDirection.magnitude > 0)
         {
             currentVelocity = Vector2.Lerp(currentVelocity, inputDirection * maxSpeed * maxSpeedPlus, acceleration * Time.deltaTime);
+
+            UseOxygen();
         }
 
         rb.linearVelocity = currentVelocity;
@@ -58,7 +60,7 @@ public class Movement : MonoBehaviour
 
     void LimitVelocity()
     {
-        if (!oxigenImpulse) return;
+        //if (!oxigenImpulse) return;
 
         if (maxSpeedTime > 0)
         {
@@ -70,10 +72,15 @@ public class Movement : MonoBehaviour
             if (maxSpeedPlus != 1f) maxSpeedPlus = 1f;
         }
 
-        if (rb.linearVelocity.magnitude > (maxSpeed * maxSpeedPlus))
+        /*if (rb.linearVelocity.magnitude > (maxSpeed * maxSpeedPlus))
         {
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-        }
+        }*/
+    }
+
+    void UseOxygen()
+    {
+        playerStats.SetOxygen(-1f * Time.deltaTime);
     }
 
     void PlayerRotation()
@@ -106,9 +113,9 @@ public class Movement : MonoBehaviour
         timeStuned = time;
     }
 
-    public void MejoraVelocidad()
+    public void SpeedBoost()
     {
-        maxSpeedTime = 20f;
+        maxSpeedTime = 25f;
     }
 
     public void OxigenImpulseValue(bool e)
