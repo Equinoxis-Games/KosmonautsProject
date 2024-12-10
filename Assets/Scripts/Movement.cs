@@ -1,13 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class Movement : MonoBehaviour
 {
     public float acceleration = 5f;
     public float maxSpeed = 10f;
     public float rotationSpeed = 10f;
-    public float oxygenPercent = 100f;
 
     private float maxSpeedPlus = 1f;
     private Rigidbody2D rb;
@@ -18,20 +15,20 @@ public class Movement : MonoBehaviour
     private Vector2 currentVelocity = Vector2.zero;
 
     public Joystick joystick;
-    public SpriteRenderer playerSprite;
-    public Image oxygenImg;
-    public TextMeshProUGUI oxygenTxt;
+
+    private PlayerStats playerStats;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     void LateUpdate()
     {
         HandleInput();
 
-        //LimitVelocity();
+        LimitVelocity();
 
         PlayerRotation();
 
@@ -44,7 +41,7 @@ public class Movement : MonoBehaviour
 
     void HandleInput()
     {
-        if (!oxigenImpulse || timeStuned > 0) return;
+        if (!oxigenImpulse || timeStuned > 0 || playerStats.GetOxygen() <= 0) return;
 
         float horizontalInput = joystick.Horizontal;
         float verticalInput = joystick.Vertical;
@@ -63,7 +60,7 @@ public class Movement : MonoBehaviour
 
     void LimitVelocity()
     {
-        if (!oxigenImpulse) return;
+        //if (!oxigenImpulse) return;
 
         if (maxSpeedTime > 0)
         {
@@ -75,19 +72,15 @@ public class Movement : MonoBehaviour
             if (maxSpeedPlus != 1f) maxSpeedPlus = 1f;
         }
 
-        if (rb.linearVelocity.magnitude > (maxSpeed * maxSpeedPlus))
+        /*if (rb.linearVelocity.magnitude > (maxSpeed * maxSpeedPlus))
         {
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-        }
+        }*/
     }
 
     void UseOxygen()
     {
-        oxygenPercent -= 0.5f * Time.deltaTime;
-
-        oxygenImg.fillAmount = oxygenPercent / 100f;
-
-        oxygenTxt.text = (int)oxygenPercent + "%";
+        playerStats.SetOxygen(-1f * Time.deltaTime);
     }
 
     void PlayerRotation()
@@ -120,9 +113,9 @@ public class Movement : MonoBehaviour
         timeStuned = time;
     }
 
-    public void MejoraVelocidad()
+    public void SpeedBoost()
     {
-        maxSpeedTime = 20f;
+        maxSpeedTime = 25f;
     }
 
     public void OxigenImpulseValue(bool e)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] float damage;
+    [SerializeField] int damage;
     [SerializeField] float recoil;
     [SerializeField] bool playerHit;
 
@@ -16,6 +16,9 @@ public class Projectile : MonoBehaviour
                 direction.Normalize();
 
                 collision.GetComponent<Movement>().AnadirImpulso(direction, recoil, 0.5f);
+                collision.GetComponent<PlayerStats>().RecieveDamage(damage);
+
+                Destroy(gameObject);
             }
         }
         else
