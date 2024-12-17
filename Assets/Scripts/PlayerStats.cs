@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] int shield;
     [SerializeField] float oxygen;
     [SerializeField] int ammo;
+    bool onAction = false;
 
     [Header ("UI")]
     public TextMeshProUGUI ammoTxt;
@@ -108,5 +110,23 @@ public class PlayerStats : MonoBehaviour
         oxygenImg.fillAmount = oxygen / 100f;
 
         oxygenTxt.text = (int)oxygen + "%";
+    }
+
+    public bool GetAction()
+    {
+        return onAction;
+    }
+
+    public void SetAction(float timer)
+    {
+        onAction = true;
+        StartCoroutine(SetActionTimer(timer));
+    }
+
+    IEnumerator SetActionTimer(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+
+        onAction = false;
     }
 }

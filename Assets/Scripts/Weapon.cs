@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 
 public class Weapon : MonoBehaviour
 {
@@ -8,13 +7,19 @@ public class Weapon : MonoBehaviour
     public Transform firePoint;         // Punto de disparo
     private PlayerStats playerStats;
 
-    public float coneAngle = 45f;       // Ángulo total del cono en grados
-    public float projectileSpeed = 10f; // Velocidad de los proyectiles
-    public int projectileCount = 4;     // Cantidad de proyectiles
-    public float reloadTimer = 2f;
-    public float recoil = 300f;
+    [Header ("Mode 1")]
+    [SerializeField] float coneAngle = 45f;   // Ángulo total del cono de disparo en grados
+    [SerializeField] float bulletForce01 = 8f; // Fuerza con la que se disparan las balas
+    [SerializeField] int bulletCount = 5;     // Número de balas disparadas
+    [SerializeField] float reloadTimer01 = 2f;
+    [SerializeField] float recoil01 = 300f;
+    [Header("Mode 2")]
+    [SerializeField] float bulletForce02 = 12f;
+    [SerializeField] float reloadTimer02 = 1f;
+    [SerializeField] float recoil02 = 200f;
 
-    private float reload = 0f;
+    float reload = 0f;
+    bool weaponMode = false;
 
     private void Start()
     {
@@ -30,45 +35,96 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void Shoot()
+    private void Shoot01()
     {
-        int projectileRealCount = projectileCount;
+        int projectileRealCount = bulletCount;
 
-        if (projectileCount > playerStats.GetAmmo()) projectileRealCount = playerStats.GetAmmo();
+        if (bulletCount > playerStats.GetAmmo()) projectileRealCount = playerStats.GetAmmo();
 
-        for (int i = 0; i < projectileRealCount; i++)
+        if (bulletCount < 1) return;
+
+        // Calcular el ángulo inicial (mitad del cono hacia la izquierda)
+        float startAngle = -coneAngle / 2;
+        float angleStep = coneAngle / (bulletCount - 1);
+
+        for (int i = 0; i < bulletCount; i++)
         {
-            // Generar un ángulo aleatorio dentro del rango del cono
-            float randomAngle = Random.Range(-coneAngle / 2, coneAngle / 2);
+            // Calcular el ángulo de cada bala
+            float currentAngle = startAngle + angleStep * i;
 
-            // Calcular la rotación para el proyectil
-            Quaternion rotation = Quaternion.Euler(0, 0, firePoint.eulerAngles.z + randomAngle);
+            // Crear una rotación basada en el ángulo actual
+            Quaternion bulletRotation = Quaternion.Euler(0, 0, firePoint.eulerAngles.z + currentAngle);
 
-            // Instanciar el proyectil en la posición del firePoint
-            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, rotation);
+            // Instanciar la bala
+            GameObject bullet = Instantiate(projectilePrefab, firePoint.position, bulletRotation);
 
-            // Aplicar velocidad al proyectil
-            Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+            // Obtener el Rigidbody2D de la bala para aplicar fuerza
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.linearVelocity = rotation * Vector2.right * projectileSpeed;
+                // Aplicar la fuerza en la dirección de la bala
+                rb.AddForce(bulletRotation * Vector2.right * bulletForce01, ForceMode2D.Impulse);
             }
+        }
+    }
+
+    private void Shoot02()
+    {
+        GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+        Quaternion bulletRotation = Quaternion.Euler(0, 0, firePoint.eulerAngles.z);
+
+        // Obtener el Rigidbody2D de la bala para aplicarle velocidad
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            // Aplicar velocidad en la dirección del firePoint
+            rb.AddForce(bulletRotation * Vector2.right * bulletForce02, ForceMode2D.Impulse);
+        }
+    }
+
+    public void ChangeMode()
+    {
+        if (weaponMode)
+        {
+            weaponMode = false;
+            reload = reloadTimer01;
+        }
+        else
+        {
+            weaponMode = true;
+            reload = reloadTimer02;
         }
     }
 
     public void FireWepon()
     {
-        if(reload <= 0 && playerStats.GetAmmo() > 0)
+        if(reload <= 0 && playerStats.GetAmmo() > 0 && !playerStats.GetAction())
         {
-            Shoot();
-            reload += reloadTimer;
+            if (weaponMode)
+            {
+                Shoot02();
+                reload = reloadTimer02;
+                playerStats.SetAmmo(-1);
 
-            playerStats.SetAmmo(-projectileCount);
+                Vector2 direction = playerMove.transform.position - transform.position;
+                direction.Normalize();
 
-            Vector2 direction = playerMove.transform.position - transform.position;
-            direction.Normalize();
+                playerMove.AnadirImpulso(direction, recoil02, 0.5f);
+            }
+            else
+            {
+                Shoot01();
+                reload = reloadTimer01;
+                playerStats.SetAmmo(-bulletCount);
 
-            playerMove.AnadirImpulso(direction, recoil, 0.5f);
+                Vector2 direction = playerMove.transform.position - transform.position;
+                direction.Normalize();
+
+                playerMove.AnadirImpulso(direction, recoil01, 0.5f);
+            }
+
+            playerStats.SetAction(0.5f);
         }
     }
 }
